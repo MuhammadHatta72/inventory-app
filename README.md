@@ -1,59 +1,201 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Inventory System - Test IT Development
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi manajemen inventory dengan fitur CRUD Produk, Customer, dan Transaksi.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- ✅ Authentication menggunakan Laravel Breeze
+- ✅ CRUD Produk dengan validasi kode unik
+- ✅ CRUD Customer dengan data alamat lengkap
+- ✅ CRUD Transaksi dengan auto-generate invoice number
+- ✅ Stok management otomatis
+- ✅ Multi-level discount (3 tingkat diskon)
+- ✅ Clean code dengan MVVC pattern
+- ✅ Error handling yang baik
+- ✅ Database design yang optimal
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Technology Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Framework**: Laravel 10
+- **Authentication**: Laravel Breeze
+- **Database**: MySQL
+- **PHP Version**: 8.1+
+- **CSS Framework**: Tailwind CSS (via Breeze)
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+Ada 2 cara instalasi: **Docker (Recommended)** atau **Manual Installation**
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Option 1: Docker Installation (Recommended) 🐳
 
-## Laravel Sponsors
+**Prerequisites:**
+- Docker & Docker Compose
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+**Quick Start:**
+```bash
+# Clone repository
+git clone <repository-url>
+cd inventory-system
 
-### Premium Partners
+# Run setup script
+chmod +x docker-setup.sh
+./docker-setup.sh
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+Atau menggunakan Makefile:
+```bash
+make setup
+```
 
-## Contributing
+Selesai! Aplikasi berjalan di:
+- **Main App**: http://localhost:8000
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Docker Commands:**
+```bash
+make up      # Start containers
+make down    # Stop containers
+make logs    # View logs
+make shell   # Access container
+make help    # Show all commands
+```
 
-## Code of Conduct
+📖 **Dokumentasi lengkap**: [DOCKER.md](DOCKER.md)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### Option 2: Manual Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Prerequisites:**
+- PHP 8.1 or higher
+- Composer
+- MySQL
+- Node.js & NPM
+
+**Steps:**
+
+1. Clone repository
+```bash
+git clone <repository-url>
+cd inventory-system
+```
+
+2. Install dependencies
+```bash
+composer install
+npm install
+```
+
+3. Setup environment
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+4. Configure database di file `.env`
+```
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=inventory_system
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+5. Run migrations
+```bash
+php artisan migrate
+```
+
+6. Seed data (optional)
+```bash
+php artisan db:seed
+```
+
+7. Build assets
+```bash
+npm run build
+```
+
+8. Run application
+```bash
+php artisan serve
+```
+
+Access aplikasi di: `http://localhost:8000`
+
+## Database Structure
+
+### Table: products
+- id (primary key)
+- code (unique, alphanumeric only)
+- name
+- price
+- stock
+- created_at, updated_at
+
+### Table: customers
+- id (primary key)
+- code (unique, alphanumeric only)
+- name
+- full_address
+- province
+- city
+- district (kecamatan)
+- village (kelurahan)
+- postal_code
+- created_at, updated_at
+
+### Table: transactions
+- id (primary key)
+- invoice_number (unique, format: INV/YYMM/0001)
+- customer_code
+- customer_name
+- customer_address
+- transaction_date
+- total
+- created_at, updated_at
+
+### Table: transaction_details
+- id (primary key)
+- transaction_id (foreign key)
+- invoice_number
+- product_code
+- product_name
+- qty
+- price
+- discount_1
+- discount_2
+- discount_3
+- net_price
+- subtotal
+- created_at, updated_at
+
+## Business Rules
+
+### Product
+- Kode produk harus unik
+- Hanya alphanumeric, tidak boleh special character
+- Produk tidak bisa dihapus jika sudah ada transaksi
+
+### Customer
+- Kode customer harus unik
+- Hanya alphanumeric, tidak boleh special character
+- Customer tidak bisa dihapus jika sudah ada transaksi
+
+### Transaction
+- Invoice number auto-generate dengan format: INV/YYMM/0001
+- Reset nomor urut setiap bulan
+- Qty tidak boleh lebih dari stok tersedia
+- Stok produk berkurang otomatis setelah transaksi
+- Harga bisa diubah saat transaksi
+- Diskon bertingkat (3 level)
+- Perhitungan: Net Price = Price - (Disc1 + Disc2 + Disc3)
+- Subtotal = Net Price × Qty
+
+## Contact
+
+Email: roziq@masuya.id
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Private Project for Test IT Development
