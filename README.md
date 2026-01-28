@@ -28,7 +28,7 @@
 
 | Category | Technology |
 |----------|-----------|
-| **Framework** | Laravel 10 |
+| **Framework** | Laravel 12 |
 | **Authentication** | Laravel Breeze |
 | **Database** | MySQL 8.0 |
 | **PHP** | 8.1+ |
