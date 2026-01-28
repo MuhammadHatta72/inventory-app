@@ -16,7 +16,7 @@ Aplikasi manajemen inventory dengan fitur CRUD Produk, Customer, dan Transaksi.
 
 ## Technology Stack
 
-- **Framework**: Laravel 10
+- **Framework**: Laravel 12
 - **Authentication**: Laravel Breeze
 - **Database**: MySQL
 - **PHP Version**: 8.1+
@@ -34,32 +34,17 @@ Ada 2 cara instalasi: **Docker (Recommended)** atau **Manual Installation**
 **Quick Start:**
 ```bash
 # Clone repository
-git clone <repository-url>
-cd inventory-system
+git clone https://github.com/MuhammadHatta72/inventory-app
+cd inventory-app
 
-# Run setup script
-chmod +x docker-setup.sh
-./docker-setup.sh
-```
+# Copy environment file
+cp .env.example .env
 
-Atau menggunakan Makefile:
-```bash
-make setup
-```
+# Build and start containers
+docker-compose up -d --build
 
 Selesai! Aplikasi berjalan di:
 - **Main App**: http://localhost:8000
-
-**Docker Commands:**
-```bash
-make up      # Start containers
-make down    # Stop containers
-make logs    # View logs
-make shell   # Access container
-make help    # Show all commands
-```
-
-📖 **Dokumentasi lengkap**: [DOCKER.md](DOCKER.md)
 
 ---
 
@@ -75,8 +60,8 @@ make help    # Show all commands
 
 1. Clone repository
 ```bash
-git clone <repository-url>
-cd inventory-system
+git clone https://github.com/MuhammadHatta72/inventory-app
+cd inventory-app
 ```
 
 2. Install dependencies
@@ -191,11 +176,3 @@ Access aplikasi di: `http://localhost:8000`
 - Diskon bertingkat (3 level)
 - Perhitungan: Net Price = Price - (Disc1 + Disc2 + Disc3)
 - Subtotal = Net Price × Qty
-
-## Contact
-
-Email: roziq@masuya.id
-
-## License
-
-Private Project for Test IT Development
