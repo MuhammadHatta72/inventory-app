@@ -55,8 +55,12 @@ class TransactionController extends Controller
             // Get customer data
             $customer = Customer::where('code', $validated['customer_code'])->first();
 
+            // Generate invoice number berdasarkan tanggal transaksi (bukan data terakhir)
+            $invoiceNumber = Transaction::generateInvoiceNumber($validated['transaction_date']);
+
             // Create transaction
             $transaction = Transaction::create([
+                'invoice_number' => $invoiceNumber,
                 'customer_code' => $customer->code,
                 'customer_name' => $customer->name,
                 'customer_address' => $customer->full_address_formatted,
