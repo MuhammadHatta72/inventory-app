@@ -21,11 +21,11 @@
                         <table id="transactionsTable" class="table table-striped table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Invoice Number</th>
-                                    <th>Customer</th>
-                                    <th>Date</th>
-                                    <th>Total</th>
-                                    <th>Actions</th>
+                                    <th class="text-left">Invoice Number</th>
+                                    <th class="text-left">Customer</th>
+                                    <th class="text-left">Date</th>
+                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -41,7 +41,7 @@
                                             <small class="text-muted">{{ $transaction->customer_code }}</small>
                                         </td>
                                         <td>{{ $transaction->transaction_date->format('d M Y') }}</td>
-                                        <td class="text-end fw-semibold text-success">
+                                        <td class="text-center fw-semibold text-success">
                                             Rp {{ number_format($transaction->total, 0, ',', '.') }}
                                         </td>
                                         <td class="text-center">

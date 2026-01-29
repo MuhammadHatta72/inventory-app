@@ -21,12 +21,12 @@
                         <table id="productsTable" class="table table-striped table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>#</th>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
-                                    <th>Stock</th>
-                                    <th>Actions</th>
+                                    <th class="text-center">#</th>
+                                    <th class="text-left">Code</th>
+                                    <th class="text-left">Name</th>
+                                    <th class="text-center">Price</th>
+                                    <th class="text-center">Stock</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>

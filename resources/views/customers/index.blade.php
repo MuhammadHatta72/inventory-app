@@ -21,17 +21,17 @@
                         <table id="customersTable" class="table table-striped table-hover align-middle mb-0">
                             <thead class="table-light">
                                 <tr>
-                                    <th>Code</th>
-                                    <th>Name</th>
-                                    <th>City</th>
-                                    <th>Province</th>
-                                    <th>Actions</th>
+                                    <th class="text-center">Code</th>
+                                    <th class="text-left">Name</th>
+                                    <th class="text-left">City</th>
+                                    <th class="text-left">Province</th>
+                                    <th class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($customers as $customer)
                                     <tr>
-                                        <td class="font-semibold">{{ $customer->code }}</td>
+                                        <td class="font-semibold text-center">{{ $customer->code }}</td>
                                         <td>{{ $customer->name }}</td>
                                         <td>{{ $customer->city }}</td>
                                         <td>{{ $customer->province }}</td>
