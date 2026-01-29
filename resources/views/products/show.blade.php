@@ -76,12 +76,11 @@
                             Back to List
                         </a>
                         @if(!$product->hasTransactions())
-                        <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline">
+                        <form action="{{ route('products.destroy', $product) }}" method="POST" class="d-inline delete-product-form">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
-                                    class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Are you sure you want to delete this product?')">
+                                    class="btn btn-danger btn-sm">
                                 Delete Product
                             </button>
                         </form>
@@ -91,4 +90,33 @@
             </div>
         </div>
     </div>
+
+    @push('scripts')
+    <script>
+        (function() {
+            // Konfirmasi hapus dengan SweetAlert
+            document.querySelectorAll('.delete-product-form').forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    if (window.Swal) {
+                        window.Swal.fire({
+                            title: 'Hapus produk?',
+                            text: 'Data yang sudah dihapus tidak dapat dikembalikan.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc2626',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus',
+                            cancelButtonText: 'Batal'
+                        }).then(function (result) {
+                            if (result.isConfirmed) form.submit();
+                        });
+                    } else {
+                        if (confirm('Hapus produk? Data tidak dapat dikembalikan.')) form.submit();
+                    }
+                });
+            });
+        })();
+    </script>
+    @endpush
 </x-app-layout>
