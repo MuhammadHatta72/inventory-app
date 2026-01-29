@@ -53,10 +53,13 @@ cp .env.example .env
 # 3. Build and start containers
 docker-compose up -d --build
 
-# 4. Run migrations (wait 15s for MySQL to be ready)
+# 4. Install Composer dependencies (IMPORTANT!)
+docker-compose exec app composer install
+
+# 5. Run migrations (wait 15s for MySQL to be ready)
 docker-compose exec app php artisan migrate --seed
 
-# 5. Access application
+# 6. Access application
 # Main App: http://localhost:8000
 # PhpMyAdmin: http://localhost:8080
 ```
@@ -81,15 +84,17 @@ docker-compose exec app php artisan migrate --seed
 git clone https://github.com/MuhammadHatta72/inventory-app.git
 cd inventory-app
 
-# 2. Install dependencies
+# 2. Install PHP dependencies (IMPORTANT! Required for PDF invoice feature)
 composer install
+
+# 3. Install Node dependencies
 npm install
 
-# 3. Setup environment
+# 4. Setup environment
 cp .env.example .env
 php artisan key:generate
 
-# 4. Configure database (.env)
+# 5. Configure database (.env)
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
@@ -97,19 +102,50 @@ DB_DATABASE=inventory_system
 DB_USERNAME=root
 DB_PASSWORD=
 
-# 5. Create database
+# 6. Create database
 mysql -u root -p -e "CREATE DATABASE inventory_system"
 
-# 6. Run migrations
+# 7. Run migrations
 php artisan migrate --seed
 
-# 7. Build assets
+# 8. Build assets
 npm run build
 
-# 8. Run application
+# 9. Run application
 php artisan serve
 ```
 
+> ⚠️ **IMPORTANT**: After cloning, you MUST run `composer install` to install all PHP dependencies including `barryvdh/laravel-dompdf` which is required for the invoice PDF download feature. Without this, you will get "Class not found" errors.
+
 Access: http://localhost:8000
+
+---
+
+## 🔧 Troubleshooting
+
+### Error: "Class 'Barryvdh\DomPDF\Facade\Pdf' not found"
+
+**Problem**: After cloning the repository, the invoice PDF download feature doesn't work.
+
+**Solution**: 
+```bash
+# Run composer install to install all dependencies
+composer install
+
+# Or if using Docker:
+docker-compose exec app composer install
+
+# Then clear cache
+php artisan config:clear
+php artisan cache:clear
+```
+
+**Why**: The `vendor` folder is not committed to git (standard Laravel practice). You must run `composer install` after cloning to download all PHP packages including `barryvdh/laravel-dompdf`.
+
+### Other Common Issues
+
+- **Database connection error**: Make sure MySQL is running and `.env` file is configured correctly
+- **Permission denied**: Run `chmod -R 775 storage bootstrap/cache` (Linux/Mac)
+- **Assets not loading**: Run `npm install && npm run build`
 
 ---

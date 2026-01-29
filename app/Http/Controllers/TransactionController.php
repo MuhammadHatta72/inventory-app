@@ -122,12 +122,23 @@ class TransactionController extends Controller
      */
     public function invoicePdf(Transaction $transaction)
     {
-        $transaction->load('details');
-        $pdf = Pdf::loadView('pdf.invoice', compact('transaction'))
-            ->setPaper('a4')
-            ->setOption('isHtml5ParserEnabled', true);
-        $filename = 'invoice-' . str_replace(['/', '\\'], '-', $transaction->invoice_number) . '.pdf';
-        return $pdf->stream($filename);
+        try {
+            // Check if DomPDF is available
+            if (!class_exists('Barryvdh\DomPDF\Facade\Pdf')) {
+                return redirect()->back()
+                    ->with('error', 'PDF library not found. Please run: composer install');
+            }
+
+            $transaction->load('details');
+            $pdf = Pdf::loadView('pdf.invoice', compact('transaction'))
+                ->setPaper('a4')
+                ->setOption('isHtml5ParserEnabled', true);
+            $filename = 'invoice-' . str_replace(['/', '\\'], '-', $transaction->invoice_number) . '.pdf';
+            return $pdf->stream($filename);
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Failed to generate PDF: ' . $e->getMessage());
+        }
     }
 
     /**
