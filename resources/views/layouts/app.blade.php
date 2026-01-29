@@ -60,6 +60,31 @@
     <!-- SweetAlert2 JS -->
     <script src="{{ asset('vendor/sweetalert2/js/sweetalert2.all.min.js') }}"></script>
 
+    <!-- Session Messages with SweetAlert -->
+    @if(session('success'))
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: {!! json_encode(session('success')) !!},
+                confirmButtonColor: '#10b981',
+                timer: 3000,
+                timerProgressBar: true
+            });
+        </script>
+    @endif
+
+    @if(session('error'))
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error!',
+                text: {!! json_encode(session('error')) !!},
+                confirmButtonColor: '#ef4444'
+            });
+        </script>
+    @endif
+
     <!-- Global Scripts -->
     @stack('scripts')
 </html>
