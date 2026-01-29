@@ -16,16 +16,6 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    @if (session('success'))
-                        <div class="mb-4 rounded-md bg-green-50 p-4 border border-green-200 text-sm text-green-800">
-                            {{ session('success') }}
-                        </div>
-                    @endif
-                    @if (session('error'))
-                        <div class="mb-4 rounded-md bg-red-50 p-4 border border-red-200 text-sm text-red-800">
-                            {{ session('error') }}
-                        </div>
-                    @endif
 
                     <div class="table-responsive">
                         <table id="productsTable" class="table table-striped table-hover align-middle mb-0">
@@ -80,80 +70,52 @@
             </div>
         </div>
     </div>
-</x-app-layout>
 
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    console.log('Hello world');
-
-    if (typeof $ === 'undefined') {
-        console.error('jQuery not loaded');
-        return;
-    }
-
-    if (!$.fn.DataTable) {
-        console.error('DataTables not loaded');
-        return;
-    }
-
-    $('#productsTable').DataTable({
-        pageLength: 10,
-        lengthMenu: [10, 25, 50, 100],
-        order: [[1, 'asc']],
-        columnDefs: [
-            { orderable: false, targets: [0, 5] }
-        ],
-        language: {
-            search: "Cari:",
-            lengthMenu: "Tampilkan _MENU_ data",
-            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-            infoEmpty: "Tidak ada data",
-            paginate: {
-                previous: "Sebelumnya",
-                next: "Selanjutnya"
-            }
-        }
-    });
-
-    // DELETE CONFIRMATION
-    document.querySelectorAll('.delete-product-form').forEach(function (form) {
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Hapus produk?',
-                text: 'Data yang sudah dihapus tidak dapat dikembalikan.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#dc2626',
-                cancelButtonColor: '#6b7280',
-                confirmButtonText: 'Ya, hapus',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) form.submit();
+    @push('scripts')
+    <script>
+        (function() {
+            $('#productsTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 100],
+                order: [[1, 'asc']],
+                columnDefs: [
+                    { orderable: false, targets: [0, 5] }
+                ],
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    infoEmpty: "Tidak ada data",
+                    paginate: {
+                        previous: "Sebelumnya",
+                        next: "Selanjutnya"
+                    }
+                }
             });
-        });
-    });
 
-    @if (session('success'))
-    Swal.fire({
-        icon: 'success',
-        title: 'Berhasil',
-        text: '{{ session('success') }}',
-        confirmButtonColor: '#16a34a'
-    });
-    @endif
-
-    @if (session('error'))
-    Swal.fire({
-        icon: 'error',
-        title: 'Gagal',
-        text: '{{ session('error') }}',
-        confirmButtonColor: '#dc2626'
-    });
-    @endif
-
-});
-</script>
+            // Konfirmasi hapus dengan SweetAlert
+            document.querySelectorAll('.delete-product-form').forEach(function (form) {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    if (window.Swal) {
+                        window.Swal.fire({
+                            title: 'Hapus produk?',
+                            text: 'Data yang sudah dihapus tidak dapat dikembalikan.',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc2626',
+                            cancelButtonColor: '#6b7280',
+                            confirmButtonText: 'Ya, hapus',
+                            cancelButtonText: 'Batal'
+                        }).then(function (result) {
+                            if (result.isConfirmed) form.submit();
+                        });
+                    } else {
+                        if (confirm('Hapus produk? Data tidak dapat dikembalikan.')) form.submit();
+                    }
+                });
+            });
+        })();
+    </script>
 @endpush
+</x-app-layout>
