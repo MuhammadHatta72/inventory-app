@@ -99,7 +99,8 @@
                                 <label for="postal_code" class="block text-sm font-medium text-gray-700">Postal Code *</label>
                                 <input type="text" name="postal_code" id="postal_code" value="{{ old('postal_code', $customer->postal_code) }}" 
                                     class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 @error('postal_code') border-red-500 @enderror" 
-                                    maxlength="10" required>
+                                    placeholder="e.g., 12950" pattern="[0-9]{5}" minlength="5" maxlength="5" inputmode="numeric" required>
+                                <p class="text-xs text-gray-500 mt-1">Must be exactly 5 digits (numbers only)</p>
                                 @error('postal_code')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror

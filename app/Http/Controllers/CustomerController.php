@@ -44,10 +44,12 @@ class CustomerController extends Controller
             'city' => 'required|string|max:100',
             'district' => 'required|string|max:100',
             'village' => 'required|string|max:100',
-            'postal_code' => 'required|string|max:10',
+            'postal_code' => 'required|numeric|digits:5',
         ], [
             'code.regex' => 'Customer code must be alphanumeric only (no special characters)',
             'code.unique' => 'Customer code already exists',
+            'postal_code.digits' => 'Postal code must be exactly 5 digits',
+            'postal_code.numeric' => 'Postal code must be numeric only',
         ]);
 
         try {
@@ -96,10 +98,12 @@ class CustomerController extends Controller
             'city' => 'required|string|max:100',
             'district' => 'required|string|max:100',
             'village' => 'required|string|max:100',
-            'postal_code' => 'required|string|max:10',
+            'postal_code' => 'required|numeric|digits:5',
         ], [
             'code.regex' => 'Customer code must be alphanumeric only (no special characters)',
             'code.unique' => 'Customer code already exists',
+            'postal_code.digits' => 'Postal code must be exactly 5 digits',
+            'postal_code.numeric' => 'Postal code must be numeric only',
         ]);
 
         try {
